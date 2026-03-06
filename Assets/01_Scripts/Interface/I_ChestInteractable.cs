@@ -7,7 +7,7 @@ public class IChestInteractable : MonoBehaviour, IInteractable
 {
    [SerializeField] private Animator anim;
 
-   private int isOpenHash;
+   private int _isOpenHash;
    private Tween _bouncyTween;
    private Tween _collectTween;
 
@@ -15,7 +15,7 @@ public class IChestInteractable : MonoBehaviour, IInteractable
    {
       
       if (!anim) return;
-      isOpenHash = Animator.StringToHash("IsOpen"); // use a hash instead of a name
+      _isOpenHash = Animator.StringToHash("IsOpen"); // use a hash instead of a name
       transform.DOScale(1.25f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
       
    }
@@ -23,9 +23,8 @@ public class IChestInteractable : MonoBehaviour, IInteractable
    public void OnHover()
    {
       Debug.Log("Interactor close by");
-      anim?.SetBool("IsOpen", true);
+      anim?.SetBool(_isOpenHash, true);
       
-      // Todo: Set UI element to show the player they can interact with the chest
       
       Toast.Instance.ShowToast("Press E to open the chest");
    }
