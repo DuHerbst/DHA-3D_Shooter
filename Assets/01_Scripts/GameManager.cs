@@ -5,9 +5,11 @@ using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour
 {
+    // REFERENCES
+    
+    [SerializeField] private MouseBehaviour mouseBehaviour;
     
     // GAME STATES
-    
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
     public GameObject levelCompleteMenu;
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
+        mouseBehaviour.ShowCursor(true);
         Debug.Log("Game Paused");
         
     }
@@ -90,9 +93,10 @@ public class GameManager : MonoBehaviour
     public void ResumeGame()
     {
         
+        isPaused = false;
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
-        isPaused = false;
+        mouseBehaviour.ShowCursor(false);
         Debug.Log("Game Resumed");
         
     }
@@ -101,6 +105,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // reloads the current scene
+        mouseBehaviour.ShowCursor(false);
     }
     
     public void QuitGame()
@@ -121,6 +126,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         Time.timeScale = 0f;
         gameOverMenu.SetActive(true);
+        mouseBehaviour.ShowCursor(true);
         
         Debug.Log("Game Over");
         
@@ -138,6 +144,7 @@ public class GameManager : MonoBehaviour
         isLevelComplete = true;
         Time.timeScale = 0f;
         levelCompleteMenu.SetActive(true);
+        mouseBehaviour.ShowCursor(true);
         
         Debug.Log("You Win!");
     }
