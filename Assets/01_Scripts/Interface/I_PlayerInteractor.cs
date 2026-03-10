@@ -20,7 +20,7 @@ public class IPlayerInteractor : MonoBehaviour
         interactInput.performed -= Interact;
     }
     
-    private void OntriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(_currentInteractable != null) return;
         
@@ -29,7 +29,7 @@ public class IPlayerInteractor : MonoBehaviour
         
     }
 
-    private void OntriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         _currentInteractable?.OnHoverOut();
         _currentInteractable = null;
