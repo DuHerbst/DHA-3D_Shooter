@@ -1,5 +1,7 @@
 using MagicPigGames;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
 
 public class FearTracker : MonoBehaviour
 {
@@ -10,16 +12,25 @@ public class FearTracker : MonoBehaviour
     
     // AUDIO
     [SerializeField] private AudioSource scareAudio;
+    [SerializeField] private AudioSource heartbeatAudio;
+    [SerializeField] private float heartAudioThreshold = 0.4f; // percentage of fear at which heartbeat starts
+    [SerializeField] private AudioSource breathingAudio;
+    [SerializeField] private float breathAudioThreshold = 0.6f;
     [SerializeField] private VerticalProgressBar fearBar;
     
     // LIGHT ZONE COUNTER
     private int _lightZoneCounter;
     private IDamageable _damageable;
     
+    // MORE SCARY FEEDBACK
+    [SerializeField] private Volume globalVolume;
+    private Vignette _vignette;
+    
     void Start()
     {
         
         _damageable = GetComponent<IDamageable>();
+        globalVolume.profile.TryGet(out _vignette);
         
     }
 
@@ -45,7 +56,7 @@ public class FearTracker : MonoBehaviour
 
             if (scareAudio != null)
             {
-                scareAudio.Play();
+                scareAudio.PlayOneShot(scareAudio.clip);
             }
             
             if (_damageable != null)
@@ -59,6 +70,46 @@ public class FearTracker : MonoBehaviour
         // update progress bar
         float fearPercentage = currentFear / maxFear;
         fearBar.SetProgress(fearPercentage);
+        
+        // audio management
+
+        if (fearPercentage >= heartAudioThreshold) // if fear is above the threshold, play heartbeat audio
+        {
+            if (heartbeatAudio != null && !heartbeatAudio.isPlaying)
+            {
+                heartbeatAudio.Play();
+            }
+            
+        }
+
+        else 
+        { 
+            if (heartbeatAudio != null && heartbeatAudio.isPlaying) 
+            { 
+                heartbeatAudio.Stop();
+            }
+        }
+        
+        if (fearPercentage >= breathAudioThreshold) // if fear is above the threshold, play breathing audio
+        {
+            if (breathingAudio != null && !breathingAudio.isPlaying)
+            {
+                breathingAudio.Play();
+            }
+        }
+        
+        else
+        {
+            if (breathingAudio != null && breathingAudio.isPlaying)
+            {
+                breathingAudio.Stop();
+            }
+        }
+        
+        if (_vignette != null)
+        {
+            _vignette.intensity.value = fearPercentage * 0.5f;
+        }
         
     }
     
