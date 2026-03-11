@@ -5,28 +5,31 @@ public class GhostPlatform : MonoBehaviour
 {
    [SerializeField] string playerTag = "Player";
    [SerializeField] float disappearDuration = 3f;
-   
-   Animator ghostAnimator;
+
+   private Animator _ghostAnimator;
 
    [SerializeField] private bool canReset;
    [SerializeField] private float resetTime;
    
    private void Start()
    {
-       ghostAnimator = GetComponent<Animator>();
-       ghostAnimator.SetFloat("ResetTime", 1/resetTime); // divide the speed to the amount of time we want the animation to last
+       _ghostAnimator = GetComponent<Animator>();
+       _ghostAnimator.SetFloat("DisappearTime", 1/resetTime); // divide the speed to the amount of time we want the animation to last
    }
 
    private void OnTriggerEnter(Collider other)
    {
-       if (other.gameObject.CompareTag(playerTag))
+       if (other.CompareTag(playerTag)) // Check the colliding object's tag
        {
-           ghostAnimator.SetBool("Trigger", true);
-           
-           if (canReset)
-           {
-               StartCoroutine(ResetPlatform());
-           }
+           _ghostAnimator.SetBool("Trigger", true);
+       }
+   }
+
+   public void TriggerReset()
+   {
+       if (canReset)
+       {
+           StartCoroutine(ResetPlatform());
        }
    }
 
@@ -35,7 +38,7 @@ public class GhostPlatform : MonoBehaviour
    {
        // Wait for the platform to disappear before resetting it
        yield return new WaitForSeconds(disappearDuration);
-       ghostAnimator.SetBool("Trigger", false);
+       _ghostAnimator.SetBool("Trigger", false);
    }
    
 }
