@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem; // always use when using the input system
+using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text; // always use when using the input system
 
 public class PlayerController : MonoBehaviour
 {
@@ -67,6 +68,12 @@ public class PlayerController : MonoBehaviour
     {
         _moveInput = value.Get<Vector2>(); // get the Vector2 value from the input
         Debug.Log(value);
+        
+        if (_characterController.enabled == false)
+        {
+            _characterController.enabled = true;
+        }
+        
     }
 
     public void OnJump()
@@ -78,6 +85,11 @@ public class PlayerController : MonoBehaviour
             Debug.Log("JUMP");
             _velocity.y = jumpVelocity;
             OnJumpEvent?.Invoke(); // null check
+            
+            if (_characterController.enabled == false)
+            {
+                _characterController.enabled = true;
+            }
             
         }
 
