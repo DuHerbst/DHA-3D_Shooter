@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class FearTracker : MonoBehaviour
 {
-    [SerializeField] private float maxFear = 100f;
+    [SerializeField] private float maxFear;
     [SerializeField] private float currentFear;
     [SerializeField] private float fearIncreaseRate;
     [SerializeField] private float fearDecreaseRate;
