@@ -11,8 +11,6 @@ public class PlatformTrigger : MonoBehaviour
     void OnTriggerEnter(Collider other)
     
     {
-        Debug.Log("Entered platform trigger " + other.name); // check what entered the platform trigger
-        
         if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(GrabPlayer(other));
@@ -24,7 +22,6 @@ public class PlatformTrigger : MonoBehaviour
         yield return new WaitForSeconds(grabDelay);
         _characterController = other.GetComponent<CharacterController>();
         _characterController.enabled = false;
-        Debug.Log("Disabled character controller of " + other.name);
         
         other.transform.SetParent(transform.parent); // refers to the parent object of the trigger
     }
@@ -32,7 +29,6 @@ public class PlatformTrigger : MonoBehaviour
     void OnTriggerExit(Collider other)
     
     {
-        Debug.Log("Exited platform trigger " + other.name);
         
         if (other.gameObject.CompareTag("Player"))
         {

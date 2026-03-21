@@ -9,7 +9,6 @@ public class IPlayerInteractor : MonoBehaviour
 
     void OnEnable()
     {
-        
         interactInput.Enable();
         interactInput.performed += Interact;
         
@@ -17,6 +16,7 @@ public class IPlayerInteractor : MonoBehaviour
 
     void OnDisable()
     {
+        interactInput.Disable();
         interactInput.performed -= Interact;
     }
     

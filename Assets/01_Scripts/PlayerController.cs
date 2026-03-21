@@ -99,15 +99,13 @@ public class PlayerController : MonoBehaviour
 
     }
 
-   
-
     private void FixedUpdate()
     {
         CheckGrounded();
         
         if (_isGrounded && _velocity.y < 0)
         {
-            _velocity.y -= -0.2f;
+            _velocity.y = -0.2f;
         }
 
     }

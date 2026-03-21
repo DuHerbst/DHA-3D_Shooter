@@ -1,7 +1,5 @@
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour
 {
@@ -64,7 +62,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         pauseMenu.SetActive(true);
         mouseBehaviour.ShowCursor(true);
-        Debug.Log("Game Paused");
         
     }
 
@@ -90,7 +87,6 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         mouseBehaviour.ShowCursor(false);
-        Debug.Log("Game Resumed");
         
     }
 
@@ -121,8 +117,6 @@ public class GameManager : MonoBehaviour
         gameOverMenu.SetActive(true);
         mouseBehaviour.ShowCursor(true);
         
-        Debug.Log("Game Over");
-        
     }
     
     public void LevelComplete()
@@ -139,7 +133,6 @@ public class GameManager : MonoBehaviour
         levelCompleteMenu.SetActive(true);
         mouseBehaviour.ShowCursor(true);
         
-        Debug.Log("You Win!");
     }
     
     

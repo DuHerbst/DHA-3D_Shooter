@@ -24,16 +24,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         UpdateHealthUI();
         
     }
-
-    void Update()
-    {
-        //DEBUG DELETE LATER!!!
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            TakeDamage(1);
-            Debug.Log("OUCH");
-        }
-    }
     
     public void TakeDamage(int damageAmount)
     {

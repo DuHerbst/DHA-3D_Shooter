@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4391538079200113125}
   - component: {fileID: 6871578600127831019}
   - component: {fileID: 5840441009029997626}
-  - component: {fileID: 7150679737580821018}
   m_Layer: 0
   m_Name: ButtonTrigger
   m_TagString: Untagged
@@ -110,24 +109,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7150679737580821018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2754911103307259235}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcd017f53e68e41439fc82b313af0edc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeTime: 5
-  arrow: Arrow
-  linkedTargets:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &7453615495641292205
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +175,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 39cc7989f799e874faf6589aeedb34f5, type: 2}
+  - {fileID: 2100000, guid: 4c216a70af6ef22419431af877580ddb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -257,3 +238,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  buttonLocation: {fileID: 7475024029235224167}
+  buttonRenderer: {fileID: 6226638605207448158}
+  pressDepth: 0.5
+  animationDuration: 0.2
+  buttonPressedColor: {r: 0.08116765, g: 0.9056604, b: 0.27297747, a: 0}
+  buttonIdleColour: {r: 0.9150943, g: 0.16954972, b: 0.09064613, a: 0}
+  buttonAudioSource: {fileID: 0}
+  buttonOnClip: {fileID: 8300000, guid: f1aff266d543a4ae5af656cc19535826, type: 3}
+  buttonOffClip: {fileID: 8300000, guid: 4d3e46695208248abab4cdd3c01a0e6a, type: 3}
+  buttonTimerClip: {fileID: 8300000, guid: 8fc65b60ec5cd421ca7d672b81a70417, type: 3}

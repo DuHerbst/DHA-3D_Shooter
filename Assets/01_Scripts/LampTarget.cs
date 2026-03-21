@@ -10,7 +10,7 @@ public class LampTarget : MonoBehaviour, ITriggerTargets
     {
         lampLight.enabled = false;
         colliderLight.enabled = false;
-        lampParticles.Pause();
+        lampParticles.Stop();
     }
     
     public void ActivateTargets()
@@ -24,6 +24,6 @@ public class LampTarget : MonoBehaviour, ITriggerTargets
     {
         lampLight.enabled = false;
         colliderLight.enabled = false;
-        lampParticles.Pause();
+        lampParticles.Stop();
     }
 }

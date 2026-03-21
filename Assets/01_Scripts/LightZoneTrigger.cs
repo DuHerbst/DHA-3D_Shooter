@@ -12,7 +12,7 @@ public class LightZoneTrigger : MonoBehaviour
             if (fearTracker != null) // check check check always check!
             {
                 fearTracker.EnterLightZone(); // call the method from tracker script
-                Debug.Log(gameObject.name + " entered light zone trigger "); // check what entered the light zone trigger
+                
             }
         }
         
@@ -27,7 +27,6 @@ public class LightZoneTrigger : MonoBehaviour
             if (fearTracker != null)
             {
                 fearTracker.ExitLightZone();
-                Debug.Log(gameObject.name + " exited light zone trigger ");
             }
         }
 
