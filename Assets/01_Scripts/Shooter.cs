@@ -15,10 +15,18 @@ public class Shooter : MonoBehaviour
     private Vector3 _shootDirection;
     private PlayerState _currentPlayerState;
     private PlayerController _currentPlayerController;
+    
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip[] _shootClips; // need multiple clips to avoid repetition and make it more immersive
 
     private void Awake()
     {
         _currentPlayerController = GetComponent<PlayerController>();
+        
+        if (_audioSource != null)
+        {
+            _audioSource.playOnAwake = false;
+        }
         
     }
 
@@ -43,6 +51,7 @@ public class Shooter : MonoBehaviour
      
      private void Shoot(InputAction.CallbackContext context)
      {
+         
          if (_currentPlayerState != PlayerState.AIM) // is the player is not in aim mode, return
          {
              return;
@@ -56,6 +65,14 @@ public class Shooter : MonoBehaviour
          
          //add force to the arrow being shot
          arrow.GetComponent<Rigidbody>().AddForce(shootForce * _shootDirection, ForceMode.Impulse);
+
+         if (_audioSource != null && _shootClips.Length > 0)
+         {
+             
+             int randomIndex = UnityEngine.Random.Range(0, _shootClips.Length); // get a random index for the shoot clips
+             _audioSource.PlayOneShot(_shootClips[randomIndex]); // play the shoot sound at the random index
+             
+         }
 
      }
     

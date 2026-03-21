@@ -19,6 +19,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gravity = -9.8f; // gravity value, has to be negative to pull the player downwards
     private Vector3 _velocity;
     [SerializeField] public float jumpVelocity = 5f;
+    
+    // AUDIO
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip[] stepsAudio;
+    [SerializeField] private float stepInterval = 0.2f;
+    private float _stepTimer;
+    [SerializeField] private AudioClip[] jumpAudio;
+    [SerializeField] private AudioClip[] damageAudio;
+    
+    //PARTICLES
+    [SerializeField] private GameObject stepParticles;
+    [SerializeField] private Transform footstepPoint;
 
     // AIM
     
@@ -31,7 +43,6 @@ public class PlayerController : MonoBehaviour
     //GROUND CHECK VARIABLES
     [SerializeField] private Vector3 groundCheckOffset;
     [SerializeField] private float groundCheckRadius = 0.5f;
-    [SerializeField] private float groundCheckDistance = 0.1f;
     [SerializeField] private LayerMask groundLayer; // to specify which layer
 
     public event Action OnJumpEvent; // event to trigger jump animation
@@ -70,23 +81,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        CalculateMovementExplore();
-        _characterController.Move(_velocity * Time.deltaTime); // Delta time is used in the update method to convert FPS to Realtime seconds
         
         if (_currentState == PlayerState.EXPLORATION)
         {
             CalculateMovementExplore();
             aimTracker.localPosition = _defaultAimTrackerPosition; // reset the aim tracker position when in exploration mode so when goin into aim mode its not locked to how it was when going out pf it
-            
         }
-
+        
         else if  (_currentState == PlayerState.AIM)
         {
             CalculateMovementAim();
             UpdateAimTrack();
         }
+        
+        _characterController.Move(_velocity * Time.deltaTime); // Delta time is used in the update method to convert FPS to Realtime seconds
+
+        HandleFootsteps();
 
     }
+
+   
 
     private void FixedUpdate()
     {
@@ -98,11 +112,34 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    
+    private void HandleFootsteps()
+    {
+        //check if player is moving
+        if (_moveInput.sqrMagnitude > 0.01f && _isGrounded) // if the player is moving and grounded, play footstep sound
+        {
+            _stepTimer -= Time.deltaTime; // decrease the step interval by the time since the last frame
+            if (_stepTimer <= 0)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, stepsAudio.Length);
+                audioSource.pitch = UnityEngine.Random.Range(0.6f, 1.5f);
+                audioSource.PlayOneShot(stepsAudio[randomIndex]);
+                
+                Instantiate(stepParticles, footstepPoint.position, Quaternion.identity);
+                
+                _stepTimer = stepInterval; // reset the step timer to the step interval
+            }
+
+            else
+            {
+                _stepTimer = 0f; 
+            }
+        }
+    }
 
     public void OnMove(InputValue value) // when move is triggered
     {
         _moveInput = value.Get<Vector2>(); // get the Vector2 value from the input
-        Debug.Log(value);
         
         if (_characterController.enabled == false)
         {
@@ -113,8 +150,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnLook(InputValue value)
     {
-        _lookInput = value.Get<Vector2>();
-        Debug.Log("player is looking around");
+        _lookInput = value.Get<Vector2>(); ;
     }
 
     public void OnJump()
@@ -122,8 +158,9 @@ public class PlayerController : MonoBehaviour
 
         if (_isGrounded)
         {
+            int randomIndex = UnityEngine.Random.Range(0, jumpAudio.Length);
+            audioSource.PlayOneShot(jumpAudio[randomIndex]);
             
-            Debug.Log("JUMP");
             _velocity.y = jumpVelocity;
             OnJumpEvent?.Invoke(); // null check
             
