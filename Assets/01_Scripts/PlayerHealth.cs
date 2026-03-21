@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public Image[] hearts; // array to hold the heart images in the UI
     public Sprite fullHeart;
     public Sprite emptyHeart;
+    
+    // AUDIO
+    [SerializeField] private AudioSource damageAudioSource;
+    [SerializeField] private AudioClip[] ouchClips;
+    [SerializeField] private AudioClip deadClip;
+    [SerializeField] private float minPitch;
+    [SerializeField] private float maxPitch;
 
     void Start()
     {
@@ -31,12 +39,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         _currentHealth -= damageAmount;
         UpdateHealthUI();
+        int randomIndex = UnityEngine.Random.Range(0, ouchClips.Length);
+        damageAudioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch); // randomize pitch for variety
+        damageAudioSource.PlayOneShot(ouchClips[randomIndex]);
         
         if (_currentHealth <= 0)
         {
-            Debug.Log("Game Over");
             _currentHealth = 0; // to prevent health from going negative
             GameManager.Instance.GameOver();
+            damageAudioSource.PlayOneShot(deadClip); // play death sound
+            
         }
         
     }

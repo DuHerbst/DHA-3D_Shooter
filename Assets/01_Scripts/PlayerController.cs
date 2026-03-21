@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour
         }
         
         _characterController.Move(_velocity * Time.deltaTime); // Delta time is used in the update method to convert FPS to Realtime seconds
-
         HandleFootsteps();
 
     }

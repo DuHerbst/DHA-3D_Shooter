@@ -41,21 +41,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver && !isLevelComplete)
+        {
+            TogglePauseMenu();
+        }
+        
         if (isPaused || isGameOver || isLevelComplete)
         {
             return;
-        }
-        
-        
-        //DEBUG DELETE LATER - TESTING GAME OVER AND LEVEL COMPLETE
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            GameOver();
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LevelComplete();
         }
         
     }
