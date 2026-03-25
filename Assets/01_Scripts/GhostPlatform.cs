@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class GhostPlatform : MonoBehaviour
 {
-   [SerializeField] string playerTag = "Player";
-   [SerializeField] float disappearDuration = 3f;
+   [SerializeField] private string playerTag = "Player";
+   [SerializeField] private float disappearDuration = 3f;
 
    private Animator _ghostAnimator;
 
@@ -14,7 +14,7 @@ public class GhostPlatform : MonoBehaviour
    private void Start()
    {
        _ghostAnimator = GetComponent<Animator>();
-       _ghostAnimator.SetFloat("DisappearTime", 1/resetTime); // divide the speed to the amount of time we want the animation to last
+       _ghostAnimator.SetFloat("DisappearTime", 1/resetTime);
    }
 
    private void OnTriggerEnter(Collider other)

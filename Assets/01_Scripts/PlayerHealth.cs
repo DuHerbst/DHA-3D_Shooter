@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         {
             _currentHealth = 0; // to prevent health from going negative
-            GameManager.Instance.GameOver();
+            GameManager.instance.GameOver();
             damageAudioSource.PlayOneShot(deadClip); // play death sound
             
         }

@@ -15,20 +15,20 @@ public class GameManager : MonoBehaviour
     public bool isGameOver = false;
     public bool isLevelComplete = false;
     
-    public static GameManager Instance {get; private set;} // singleton: only one of this class that can exist
+    public static GameManager instance {get; private set;} // singleton: only one of this class that can exist
 
     private void Awake()
     {
         isPaused = false;
         Time.timeScale = 1f;
         
-        if(Instance != null && Instance != this)
+        if(instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
         
-        Instance = this;
+        instance = this;
         
         //INVALIDATE MENUS ON START
         pauseMenu.SetActive(false);
@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    
-    public void PauseGame() // Pauses the game by setting timescale to 0
+
+    private void PauseGame() // Pauses the game by setting timescale to 0
     {
         if (isGameOver || isLevelComplete)
         {
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void TogglePauseMenu()
+    private void TogglePauseMenu()
 
     {
         if (isPaused)

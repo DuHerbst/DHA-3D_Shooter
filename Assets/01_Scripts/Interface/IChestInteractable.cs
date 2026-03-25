@@ -51,7 +51,7 @@ public class IChestInteractable : MonoBehaviour, IInteractable
       
       _collectTween = transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).OnComplete(() =>
       {
-         GameManager.Instance.LevelComplete(); // for now, on assignment 3 we will create a win condition on a separate script since we will need 3 chests to open the door
+         GameManager.instance.LevelComplete(); // for now, on assignment 3 we will create a win condition on a separate script since we will need 3 chests to open the door
          Destroy(gameObject);
       });
       

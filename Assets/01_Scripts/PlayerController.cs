@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 _aimTrackerPosition;
     private CharacterController _characterController;
 
-    private PlayerState _currentState; // calls the player state enum that stores teh states
+    private PlayerState _currentState; // calls the player state enum that stores states
 
     void Start()
     {
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     }
     
-    public bool IsGrounded() // gives access to other scripts to view
+    public bool IsGrounded()
     {
         return _isGrounded;
     }

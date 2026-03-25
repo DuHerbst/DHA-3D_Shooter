@@ -58,13 +58,10 @@ public class Shooter : MonoBehaviour
              return;
          }
          
-         //calculate arrow direction
          _shootDirection = aimPoint.position - shootPoint.position; // direction is the difference between the aim point and the shoot point
          _shootDirection.Normalize(); // normalize the direction to get a unit vector
          
-         GameObject arrow = Instantiate(arrowObject, shootPoint.position, Quaternion.LookRotation(_shootDirection)); // instantiate the arrow at the shoot point position, with the rotation of the shoot direction
-         
-         //add force to the arrow being shot
+         GameObject arrow = Instantiate(arrowObject, shootPoint.position, Quaternion.LookRotation(_shootDirection));
          arrow.GetComponent<Rigidbody>().AddForce(shootForce * _shootDirection, ForceMode.Impulse);
 
          if (audioSource != null && shootClips.Length > 0)

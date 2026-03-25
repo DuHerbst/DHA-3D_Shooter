@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlatformTrigger : MonoBehaviour
 {
     [SerializeField] private float grabDelay;
-    private float timer;
+    private float _timer;
     private CharacterController _characterController;
     
     void OnTriggerEnter(Collider other)
@@ -17,6 +17,7 @@ public class PlatformTrigger : MonoBehaviour
         }
     }
     
+    // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator GrabPlayer(Collider other)
     {
         yield return new WaitForSeconds(grabDelay);

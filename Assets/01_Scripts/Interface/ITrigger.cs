@@ -4,10 +4,7 @@ public interface ITrigger
 
 {
     
-    
     void OnActivate();
-    
     void OnDeactivate();
-    
     
 }
