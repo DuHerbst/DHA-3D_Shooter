@@ -7,7 +7,6 @@ public class ButtonTrigger : MonoBehaviour, ITrigger
 {
     
     [SerializeField] private float activeTime = 5f;
-    [SerializeField] private string arrow = "Arrow";
     private bool _isActive = false;
     
     public GameObject[] linkedTargets;
@@ -40,7 +39,7 @@ public class ButtonTrigger : MonoBehaviour, ITrigger
     void OnTriggerEnter(Collider other)
     {
         
-        if (other.CompareTag(arrow) && !_isActive)
+        if (other.CompareTag("Arrow") && !_isActive)
         {
             _isActive = true;
             OnActivate();

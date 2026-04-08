@@ -8,25 +8,30 @@ public class CrosshairAim : MonoBehaviour
     [SerializeField] private Canvas crossHairCanvas;
     
      void OnEnable()
-    {
-        player.OnStateUpdated += PlayerState;
+     {
+         player.OnStateUpdated += HandlePlayerState;
     }
 
-    private void PlayerState(PlayerState obj)
+     void OnDisable()
     {
-        throw new System.NotImplementedException();
+        player.OnStateUpdated -= HandlePlayerState;
     }
-
-    void OnDisable()
+     
+    private void HandlePlayerState(PlayerState state)
     {
-        player.OnStateUpdated -= PlayerState;
+        if (state == PlayerState.AIM)
+        {
+            crossHairCanvas.enabled = true;
+        }
+        else
+        {
+            crossHairCanvas.enabled = false;
+        }
     }
-
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        crossHairCanvas.enabled = true;
+        crossHairCanvas.enabled = false;
     }
     
 }

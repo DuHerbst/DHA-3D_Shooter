@@ -14,7 +14,6 @@ public class Arrow : MonoBehaviour
     void FixedUpdate()
     {
         _rb.rotation = Quaternion.LookRotation(_rb.linearVelocity);
-        //lerp here
     }
     
     private void OnTriggerEnter(Collider other)

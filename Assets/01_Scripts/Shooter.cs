@@ -66,10 +66,8 @@ public class Shooter : MonoBehaviour
 
          if (audioSource != null && shootClips.Length > 0)
          {
-             
              int randomIndex = UnityEngine.Random.Range(0, shootClips.Length); // get a random index for the shoot clips
              audioSource.PlayOneShot(shootClips[randomIndex]); // play the shoot sound at the random index
-             
          }
 
      }

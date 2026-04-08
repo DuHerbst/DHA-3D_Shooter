@@ -22,6 +22,9 @@ public class Enemy : MonoBehaviour
     private bool _isWaiting = false;
     private Vector3 _directionToPlayer; // variable to store the direction from the enemy to the player
     
+    // do damage
+    [SerializeField] private int damageAmount;
+    
     void Start()
     {
         _currentState = EnemyState.Idle; // start in idle state
@@ -39,6 +42,7 @@ public class Enemy : MonoBehaviour
             
             if (PlayerInRange() && IsInFOV())
             {
+                Debug.Log("Player in range and in FOV"); 
                 _currentState = EnemyState.Chasing; // change state to chasing if the player is in the field of view and within chase distance
                 enemyAnimator.SetBool("Walk", false);
             }
@@ -46,6 +50,7 @@ public class Enemy : MonoBehaviour
         
         else if (_currentState == EnemyState.Patrolling)
         {
+            Debug.Log("Patrolling");
             enemyAnimator.SetBool("Walk", true);
             if (agent.remainingDistance <= 0.2f) // check if the agent has reached the current target (remaining distance is less than or equal to 0.2 units)
             {
@@ -57,6 +62,7 @@ public class Enemy : MonoBehaviour
         
         else if (_currentState == EnemyState.Chasing)
         {
+            Debug.Log("Chasing");
             enemyAnimator.SetBool("Chase", true);
             agent.SetDestination(playerTransform.position); // set the destination to the player's position
             
@@ -108,6 +114,15 @@ public class Enemy : MonoBehaviour
         return Vector3.Angle(transform.forward, _directionToPlayer) <= checkDistanceAngle; // calculate angle
         
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        IDamageable damageable = other.GetComponent<IDamageable>(); // check for Idamageable interface
+        
+        if (damageable != null)
+        {
+            damageable.TakeDamage(damageAmount);
+        }
+    }
     
 }

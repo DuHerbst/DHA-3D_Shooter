@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
             if (_stepTimer <= 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, stepsAudio.Length);
-                audioSource.pitch = UnityEngine.Random.Range(0.6f, 1.5f);
+                audioSource.pitch = UnityEngine.Random.Range(0.6f, 1f);
                 audioSource.PlayOneShot(stepsAudio[randomIndex]);
                 
                 Instantiate(stepParticles, footstepPoint.position, Quaternion.identity);

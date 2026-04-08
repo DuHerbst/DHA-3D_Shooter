@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using DG.Tweening;
 using Random = System.Random;
@@ -39,10 +38,12 @@ public class IChestInteractable : MonoBehaviour, IInteractable
 
    public void OnHoverOut()
    {
-      anim?.SetBool("IsOpen", false);
-      
-      // to do: Hide UI
-      Toast.Instance.HideToast();
+      anim?.SetBool(_isOpenHash, false);
+
+      if (Toast.Instance != null)
+      {
+         Toast.Instance.HideToast();
+      }
       
    }
 

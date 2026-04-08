@@ -311,9 +311,20 @@ MonoBehaviour:
   rotationSpeed: 10
   gravity: -20
   jumpVelocity: 9
+  audioSource: {fileID: 0}
+  stepsAudio: []
+  stepInterval: 0.2
+  jumpAudio: []
+  damageAudio: []
+  stepParticles: {fileID: 0}
+  footstepPoint: {fileID: 0}
+  moveSpeedAim: 0
+  rotationSpeedAim: 0
+  aimTracker: {fileID: 0}
+  maxAimHeight: 0
+  minxAimHeight: 0
   groundCheckOffset: {x: 0, y: 0, z: 0}
   groundCheckRadius: 0.2
-  groundCheckDistance: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -400,8 +411,11 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   shootPoint: {fileID: 7951232893807693245}
+  aimPoint: {fileID: 0}
   arrowObject: {fileID: 3280081671257910956, guid: 893ee75e0e27040458c4f736ee2ea6f3, type: 3}
   shootForce: 2000
+  audioSource: {fileID: 0}
+  shootClips: []
 --- !u!1 &6920326105675038176
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +441,7 @@ Transform:
   m_GameObject: {fileID: 6920326105675038176}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000008146034, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.006, y: 0.91, z: 0.896}
+  m_LocalPosition: {x: -0.006, y: 0.91, z: 1.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
