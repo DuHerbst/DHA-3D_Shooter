@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // REFERENCES
-    
     [SerializeField] private MouseBehaviour mouseBehaviour;
     
     // GAME STATES

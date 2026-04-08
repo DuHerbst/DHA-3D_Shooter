@@ -36,7 +36,6 @@ public class GhostPlatform : MonoBehaviour
    private IEnumerator ResetPlatform()
 
    {
-       // Wait for the platform to disappear before resetting it
        yield return new WaitForSeconds(disappearDuration);
        _ghostAnimator.SetBool("Trigger", false);
    }
