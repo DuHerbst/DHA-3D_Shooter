@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public int maxHealth = 5;
-    private int _currentHealth;
+    public int currentHealth;
 
     public Image[] hearts; // array to hold the heart images in the UI
     public Sprite fullHeart;
@@ -20,22 +19,22 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     void Start()
     {
-        _currentHealth = maxHealth;
+        currentHealth = maxHealth;
         UpdateHealthUI();
         
     }
     
     public void TakeDamage(int damageAmount)
     {
-        _currentHealth -= damageAmount;
+        currentHealth -= damageAmount;
         UpdateHealthUI();
         int randomIndex = UnityEngine.Random.Range(0, ouchClips.Length);
         damageAudioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch); // randomize pitch for variety
         damageAudioSource.PlayOneShot(ouchClips[randomIndex]);
         
-        if (_currentHealth <= 0)
+        if (currentHealth <= 0)
         {
-            _currentHealth = 0; // to prevent health from going negative
+            currentHealth = 0; // to prevent health from going negative
             GameManager.instance.GameOver();
             damageAudioSource.PlayOneShot(deadClip); // play death sound
             
@@ -48,7 +47,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         
         for (int arrayIndex = 0; arrayIndex < hearts.Length; arrayIndex++) // we need to loop through each heart in the array (i means index in the array so start counting at 0 in the array, remember this!!!)
         {
-            if (arrayIndex < _currentHealth)
+            if (arrayIndex < currentHealth)
             {
                 hearts[arrayIndex].sprite = fullHeart;
             }

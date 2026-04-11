@@ -78,8 +78,7 @@ public class ButtonTrigger : MonoBehaviour, ITrigger
         
         
     }
-
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     private IEnumerator ActivationRoutine()
     {
         buttonAudioSource.PlayOneShot(buttonTimerClip);

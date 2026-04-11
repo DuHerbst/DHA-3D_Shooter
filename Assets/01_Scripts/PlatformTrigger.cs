@@ -1,5 +1,4 @@
-using System.Collections;   
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class PlatformTrigger : MonoBehaviour
@@ -21,14 +20,10 @@ public class PlatformTrigger : MonoBehaviour
     IEnumerator GrabPlayer(Collider other)
     {
         yield return new WaitForSeconds(grabDelay);
-        _characterController = other.GetComponent<CharacterController>();
-        _characterController.enabled = false;
-        
         other.transform.SetParent(transform.parent); // refers to the parent object of the trigger
     }
     
     void OnTriggerExit(Collider other)
-    
     {
         
         if (other.gameObject.CompareTag("Player"))

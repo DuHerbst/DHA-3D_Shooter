@@ -44,7 +44,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 groundCheckOffset;
     [SerializeField] private float groundCheckRadius = 0.5f;
     [SerializeField] private LayerMask groundLayer; // to specify which layer
-
     public event Action OnJumpEvent; // event to trigger jump animation
     public event Action <PlayerState> OnStateUpdated; // when states change
     
@@ -93,8 +92,12 @@ public class PlayerController : MonoBehaviour
             CalculateMovementAim();
             UpdateAimTrack();
         }
+
+        if (_characterController.enabled)
+        {
+            _characterController.Move(_velocity * Time.deltaTime); // Delta time is used in the update method to convert FPS to Realtime seconds
+        }
         
-        _characterController.Move(_velocity * Time.deltaTime); // Delta time is used in the update method to convert FPS to Realtime seconds
         HandleFootsteps();
 
     }
@@ -106,6 +109,12 @@ public class PlayerController : MonoBehaviour
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -0.2f;
+            //check if parent is null and if its null, check if player is moving
+            //if not moving turn off character controller
+            if (transform.parent != null && _moveInput.sqrMagnitude < 0.01f)
+            {
+                _characterController.enabled = false;
+            }
         }
 
     }
@@ -121,9 +130,6 @@ public class PlayerController : MonoBehaviour
                 int randomIndex = UnityEngine.Random.Range(0, stepsAudio.Length);
                 audioSource.pitch = UnityEngine.Random.Range(0.6f, 1f);
                 audioSource.PlayOneShot(stepsAudio[randomIndex]);
-                
-                Instantiate(stepParticles, footstepPoint.position, Quaternion.identity);
-                
                 _stepTimer = stepInterval; // reset the step timer to the step interval
             }
 

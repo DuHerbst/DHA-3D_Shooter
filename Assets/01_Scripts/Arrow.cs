@@ -1,14 +1,15 @@
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
+
 {
-    
+    [SerializeField] private int arrowDamage = 1;
     private Rigidbody _rb;
     
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        Invoke(nameof(DestroyAfter), 5f);
+        
     }
 
     void FixedUpdate()
@@ -18,28 +19,23 @@ public class Arrow : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        
-        if (other.CompareTag("Player") || other.CompareTag("Interactor"))
-        {
-            return;
-        }
-        
-        ITrigger trigger = other.GetComponent<ITrigger>();
-        
-        if (trigger != null)
+        // if other is not player and is not enemy, destroy game object after 2 seconds
+
+        if (other.CompareTag("Player"))
         {
             return;
         }
 
-        else
+        if (other.CompareTag("Enemy"))
+            
         {
-            Destroy(gameObject);
+            IDamageable target = other.gameObject.GetComponent<IDamageable>();
+            target?.TakeDamage(arrowDamage);
+            
         }
         
+        Destroy(gameObject, 2f);
+        
     }
-
-    void DestroyAfter()
-    {
-        Destroy(gameObject);
-    }
+    
 }
