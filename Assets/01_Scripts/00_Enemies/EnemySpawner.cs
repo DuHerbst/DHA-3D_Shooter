@@ -20,12 +20,10 @@ public class EnemySpawner : MonoBehaviour
             
             if (playerHealth.currentHealth <= healthThreshold)
             {
-                Debug.Log("Low health condition reached");
                 spawnTimer += Time.deltaTime;
                 
                 if (spawnTimer >= spawnCooldown)
                 {
-                    Debug.Log("Spawning enemy now");
                     SpawnEnemy();
                     spawnTimer = 0f;
                 }
@@ -36,15 +34,12 @@ public class EnemySpawner : MonoBehaviour
         private void SpawnEnemy()
         {
            
-            Vector3 spawnDirection = player.transform.forward + player.transform.right * Random.Range(-1f, 1f);
-            spawnDirection.Normalize();
-            
-            Vector3 spawnPosition = player.transform.position + spawnDirection * spawnRadius; // set the enemy spawn position to the direction and radius from the player
-            spawnPosition.y = 0f; // to spawn on the fround i think...
-            
-            Debug.Log("Spawn position: " + spawnPosition);
-            
-            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            Vector3 spawnPosition = player.transform.position + player.transform.forward * 3f;
+            spawnPosition.y = player.transform.position.y + 1.5f;
+
+            GameObject spawned = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+
+            Debug.Log("Spawned: " + spawned.name + " at " + spawnPosition);
 
         }
     
