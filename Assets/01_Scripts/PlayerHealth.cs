@@ -28,8 +28,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         currentHealth -= damageAmount;
         UpdateHealthUI();
-        int randomIndex = UnityEngine.Random.Range(0, ouchClips.Length);
-        damageAudioSource.pitch = UnityEngine.Random.Range(minPitch, maxPitch); // randomize pitch for variety
+        int randomIndex = Random.Range(0, ouchClips.Length);
+        damageAudioSource.pitch = Random.Range(minPitch, maxPitch); // randomize pitch for variety
         damageAudioSource.PlayOneShot(ouchClips[randomIndex]);
         
         if (currentHealth <= 0)

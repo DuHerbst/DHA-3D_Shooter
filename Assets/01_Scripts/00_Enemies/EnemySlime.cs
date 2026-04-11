@@ -40,11 +40,6 @@ public class EnemySlime : EnemyBase
             if(!_isWaiting)
                 StartCoroutine(WaitAndGo(5)); // start the coroutine to wait for 2 seconds before going to the next patrol point
             
-            //Debugging
-            bool inRange = PlayerInRange();
-            bool inFov = IsInFOV();
-            Debug.Log("Range: " + inRange + " | FOV: " + inFov);
-            
             // start chasing here
             if (PlayerInRange() && IsInFOV())
             {
@@ -89,7 +84,6 @@ public class EnemySlime : EnemyBase
     private IEnumerator WaitAndGo (float waitTime) //create coroutine for waiting at points
     {
         _isWaiting = true;
-        Debug.Log(_isWaiting);
         yield return new WaitForSeconds(waitTime); // wait for 2 seconds before choosing a new patrol point
         enemyAnimator.SetBool("Idle", false);
         _currentState = EnemyState.Patrolling; // change state to patrol after waiting
@@ -133,6 +127,7 @@ public class EnemySlime : EnemyBase
         if (damageable != null)
         {
             damageable.TakeDamage(damageAmount);
+            AttackFeedback();
         }
     }
     

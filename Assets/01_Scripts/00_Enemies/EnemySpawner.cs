@@ -10,13 +10,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int healthThreshold;
     [SerializeField] private float spawnCooldown;
     [SerializeField] private float spawnRadius;
+    [SerializeField] private int maxEnemies;
+    private int _currentEnemies;
     
     //Timers
     [SerializeField] private float spawnTimer;
     
         void Update()
         {
-            Debug.Log("Current Health: " + playerHealth.currentHealth + " | Threshold: " + healthThreshold);
             
             if (playerHealth.currentHealth <= healthThreshold)
             {
@@ -33,13 +34,17 @@ public class EnemySpawner : MonoBehaviour
     
         private void SpawnEnemy()
         {
+            if (_currentEnemies >= maxEnemies)
+            {
+                return; // don't spawn if we have reached the maximum number of enemies
+            }
            
-            Vector3 spawnPosition = player.transform.position + player.transform.forward * 3f;
+            Vector2 randomCircle = Random.insideUnitCircle * spawnRadius; // make sure spawns inside a circular radius
+
+            Vector3 spawnPosition = player.transform.position + new Vector3(randomCircle.x, 0, randomCircle.y);
             spawnPosition.y = player.transform.position.y + 1.5f;
 
-            GameObject spawned = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            Debug.Log("Spawned: " + spawned.name + " at " + spawnPosition);
+            Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
 
         }
     

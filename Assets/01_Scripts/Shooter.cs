@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +17,10 @@ public class Shooter : MonoBehaviour
     
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip[] shootClips; // need multiple clips to avoid repetition and make it more immersive
+    
+    // fire rate
+    [SerializeField] private float shootCooldown;
+    private float _fireTimer; 
 
     private void Awake()
     {
@@ -28,6 +31,11 @@ public class Shooter : MonoBehaviour
             audioSource.playOnAwake = false;
         }
         
+    }
+
+    private void Update()
+    {
+        _fireTimer -= Time.deltaTime;
     }
 
     void OnEnable()
@@ -52,6 +60,20 @@ public class Shooter : MonoBehaviour
      
      private void Shoot(InputAction.CallbackContext context)
      {
+         if (!context.performed) // is the action is not performed
+         {
+             return;
+         }
+         
+         if (arrowObject == null)
+         {
+             return;
+         }
+         
+         if (_fireTimer > 0)
+         {
+             return;
+         }
          
          if (_currentPlayerState != PlayerState.AIM) // is the player is not in aim mode, return
          {
@@ -63,10 +85,12 @@ public class Shooter : MonoBehaviour
          
          GameObject arrow = Instantiate(arrowObject, shootPoint.position, Quaternion.LookRotation(_shootDirection));
          arrow.GetComponent<Rigidbody>().AddForce(shootForce * _shootDirection, ForceMode.Impulse);
+         
+         _fireTimer = shootCooldown; // reset the fire timer to the cooldown time after instantiating and shooting 
 
          if (audioSource != null && shootClips.Length > 0)
          {
-             int randomIndex = UnityEngine.Random.Range(0, shootClips.Length); // get a random index for the shoot clips
+             int randomIndex = Random.Range(0, shootClips.Length); // get a random index for the shoot clips
              audioSource.PlayOneShot(shootClips[randomIndex]); // play the shoot sound at the random index
          }
 

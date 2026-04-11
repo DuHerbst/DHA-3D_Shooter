@@ -6,7 +6,6 @@ public class LavaZone : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log( "Touched lava " + other.gameObject.name); // check what touched the lava
         
         IDamageable damageable = other.GetComponent<IDamageable>(); // checks for interface
 

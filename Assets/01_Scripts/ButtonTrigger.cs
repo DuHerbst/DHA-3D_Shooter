@@ -7,7 +7,7 @@ public class ButtonTrigger : MonoBehaviour, ITrigger
 {
     
     [SerializeField] private float activeTime = 5f;
-    private bool _isActive = false;
+    private bool _isActive;
     
     public GameObject[] linkedTargets;
     

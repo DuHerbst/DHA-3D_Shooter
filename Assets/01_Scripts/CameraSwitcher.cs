@@ -32,8 +32,6 @@ public class CameraSwitcher : MonoBehaviour
                 // what happens when player is in aiming mode
                 aimCamera.Prioritize();
                 break;
-            default:
-                break;
         }
         
     }

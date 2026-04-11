@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text; // always use when using the input system
 
 public class PlayerController : MonoBehaviour
 {
@@ -109,8 +108,6 @@ public class PlayerController : MonoBehaviour
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -0.2f;
-            //check if parent is null and if its null, check if player is moving
-            //if not moving turn off character controller
             if (transform.parent != null && _moveInput.sqrMagnitude < 0.01f)
             {
                 _characterController.enabled = false;
@@ -121,22 +118,25 @@ public class PlayerController : MonoBehaviour
     
     private void HandleFootsteps()
     {
-        //check if player is moving
-        if (_moveInput.sqrMagnitude > 0.01f && _isGrounded) // if the player is moving and grounded, play footstep sound
+        if (_moveInput.sqrMagnitude > 0.01f && _isGrounded)
         {
-            _stepTimer -= Time.deltaTime; // decrease the step interval by the time since the last frame
+            _stepTimer -= Time.deltaTime;
+
             if (_stepTimer <= 0)
             {
-                int randomIndex = UnityEngine.Random.Range(0, stepsAudio.Length);
-                audioSource.pitch = UnityEngine.Random.Range(0.6f, 1f);
-                audioSource.PlayOneShot(stepsAudio[randomIndex]);
-                _stepTimer = stepInterval; // reset the step timer to the step interval
-            }
+                if (audioSource != null && stepsAudio != null && stepsAudio.Length > 0) // check for null and array
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, stepsAudio.Length);
+                    audioSource.pitch = UnityEngine.Random.Range(0.6f, 1f);
+                    audioSource.PlayOneShot(stepsAudio[randomIndex]);
+                }
 
-            else
-            {
-                _stepTimer = 0f; 
+                _stepTimer = stepInterval;
             }
+        }
+        else
+        {
+            _stepTimer = 0f;
         }
     }
 
